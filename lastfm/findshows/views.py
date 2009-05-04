@@ -19,11 +19,15 @@ def myshows(request):
         form = ShowsForm(request.POST)
         if form.is_valid():
             user = form.cleaned_data['username']
-            shows = __find_shows__(user)
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            shows = __find_shows__(user, city, state)
             return render_to_response('myshows.html', {'myshows' : shows,
                                       'user' : user})
 
-def __find_shows__(lastfm_user):
+    return render_to_response('home.html')
+
+def __find_shows__(lastfm_user, city, state):
     user = pylast.User(user_name=lastfm_user, api_key=API_KEY,
                        api_secret=API_SECRET, session_key=None)
     api = eventful.API(app_key="hdpzLJWDRbFWFsLf")
@@ -38,13 +42,13 @@ def __find_shows__(lastfm_user):
     for band in bands[:20]:
         bname = band.get_item().get_name().encode('utf-8')
         per = 'performer:"%s"' % (bname)
-        shows = api.call(method="events/search", location="Houston, Tx",
-                         keywords=per)
+        loc = "%s, %s" % (city, state)
+        shows = api.call(method="events/search", location=loc, keywords=per)
 
         if int(shows['total_items']) > 0:
             myshows[bname] = []
             for show in shows['events']['event']:
-                time = datetime.datetime.strptime('2009-07-22 19:30:00',
+                time = datetime.datetime.strptime(show['start_time'],
                                                   '%Y-%m-%d %H:%M:%S')
                 myshows[bname].append({'venue' : show['venue_name'],
                                        'time' : time})
