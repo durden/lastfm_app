@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Shows for {{ user }} 's top 20 Lastfm bands</h1>
+
+    {% if myshows %}
+        <ul>
+            {% for band, shows in myshows.items %} 
+                {% for show in shows %}
+                    <li> {{ band }} is playing at {{ show.venue }} on {{ show.time|date:"D M d Y f"}}</li>
+                {% endfor %}
+            {% endfor %} 
+        </ul>
+    {% endif %}
+{% endblock %}
