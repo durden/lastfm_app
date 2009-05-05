@@ -1,0 +1,18 @@
+
+Requires following extra libraries (all included):
+    - eventfulpy-0.3
+    - httplib2-0.4.0
+    - pylast-0.3.2
+    - simplejson-2.0.9
+
+Steps for webfaction installation:
+
+1. Create django 1.0.2/mod_python 3.3.1/python 2.5 app
+2. Edit apache2/conf/httpd.conf to use lastfm.settings
+3. Create static/cgi/php app for media
+4. Add both apps to domain
+5. Install all python libs
+    - Create symlink for ~/lib/python2.5 to ~/lib/python
+    - Use python2.5 setup.py install --home=$HOME
+6. Change settings.py templates dir
+7. Change settings.py media dir
