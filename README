@@ -17,3 +17,6 @@ Steps for webfaction installation:
     - Use python2.5 setup.py install --home=$HOME
 8. Change settings.py templates dir
 9. Change settings.py media dir
+
+NOTE: You must use the production branch on the actual production server.  It
+      contains changes (paths, etc.) needed for the production environment.
